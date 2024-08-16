@@ -16,7 +16,17 @@ namespace Scaling
             gameObject.transform.localScale = new Vector3(scale, scale, scale);
         }
 
-        
+        public void Smaller()
+        {
+            this._currentScale -= .1f;
+            this.Resize(this._currentScale);
+        }
+
+        public void Bigger()
+        {
+            this._currentScale += .1f;
+            this.Resize(this._currentScale);
+        }
     }
     
     
