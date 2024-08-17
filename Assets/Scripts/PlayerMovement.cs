@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Unity;
+using System;
 
 public class CharacterController3D : MonoBehaviour
 {
@@ -43,8 +44,20 @@ public class CharacterController3D : MonoBehaviour
             Jump();
         }
 
+        if (Input.GetButtonDown("Fire3") && isGrounded)
+        {
+            StartCoroutine(Dash());
+        }
+
         playerVelocity.y += gravityValue * fallingMultiplier * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private IEnumerator Dash()
+    {
+        playerSpeed *= 4;
+        yield return new WaitForSeconds(0.7f);
+        playerSpeed /= 4;
     }
 
     private void Move()
