@@ -42,6 +42,9 @@ public class MonsterObject : MonoBehaviour
 
         if(lp <= 0)
         {
+            WaveController wc =FindFirstObjectByType<WaveController>();
+            wc.monsterAmount -= 1;
+
             Destroy(gameObject);
             Destroy(monster);
         }
@@ -52,6 +55,7 @@ public class MonsterObject : MonoBehaviour
     private void UpdateHealth()
     {
         lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
+        initialHealth = (int) Math.Round(initialHealth * _resizable.HealthMultiplier);
     }
 
     private void UpdateSpeed()
