@@ -12,6 +12,9 @@ public class CharacterController3D : MonoBehaviour
     public float playerSpeed = 5f;
     public float lookSpeed = 2f;
     public float maxLookAngle = 75f;
+    public float dashMultiplier = 3f;
+    public float dashLengthSeconds = 0.6f;
+    public float dashAffectionRadius = 10f;
 
     [SerializeField] private float fallingMultiplier = 2f;
     [SerializeField] private float jumpHeight = 1.0f;
@@ -55,9 +58,15 @@ public class CharacterController3D : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        playerSpeed *= 4;
-        yield return new WaitForSeconds(0.7f);
-        playerSpeed /= 4;
+        playerSpeed *= dashMultiplier;
+        Collider[] hitColliders = Physics.OverlapSphere(camera.transform.position, dashAffectionRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            Debug.Log("Monster was nearby during dash!");
+            hitCollider.SendMessage("Smaller");
+        }
+        yield return new WaitForSeconds(dashLengthSeconds);
+        playerSpeed /= dashMultiplier;
     }
 
     private void Move()

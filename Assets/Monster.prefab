@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2383858241703939634}
   - component: {fileID: 8210785893291624627}
   - component: {fileID: 1939286724751374824}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,6 +77,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Monster: {fileID: 2383858241703939634}
+  Target: {fileID: 0}
+  Lp: 0
+  Speed: 0
 --- !u!136 &1939286724751374824
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -112,7 +115,7 @@ GameObject:
   - component: {fileID: 7638424791623669073}
   - component: {fileID: 2146923160996076878}
   - component: {fileID: 1211441821503030846}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LegRA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +220,7 @@ GameObject:
   - component: {fileID: 3173886426354303918}
   - component: {fileID: 7082539502602221905}
   - component: {fileID: 7780327115461115304}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +325,7 @@ GameObject:
   - component: {fileID: 5139747119392481869}
   - component: {fileID: 5617059296856412923}
   - component: {fileID: 6934290997200924972}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LegLU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +430,7 @@ GameObject:
   - component: {fileID: 7301251432178614955}
   - component: {fileID: 8091913823476835686}
   - component: {fileID: 1607522852580957500}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ArmR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +535,7 @@ GameObject:
   - component: {fileID: 755321166029964951}
   - component: {fileID: 7953095244375383518}
   - component: {fileID: 1799614409289975347}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +640,7 @@ GameObject:
   - component: {fileID: 7716949707090749599}
   - component: {fileID: 7667924958296214490}
   - component: {fileID: 3191927414388552212}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ArmL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -742,7 +745,7 @@ GameObject:
   - component: {fileID: 8747897614341310377}
   - component: {fileID: 3555187072202474687}
   - component: {fileID: 1958320540168976036}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LegRA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -847,7 +850,7 @@ GameObject:
   - component: {fileID: 1078653739583272842}
   - component: {fileID: 3974561332133066330}
   - component: {fileID: 8958331709621270173}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LegRU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
