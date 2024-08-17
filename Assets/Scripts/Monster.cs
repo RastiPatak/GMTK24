@@ -52,8 +52,9 @@ public class MonsterObject : MonoBehaviour
 
     private void UpdateHealth()
     {
+        float percent =  (float) lp / initialHealth;
         lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
-        initialHealth = (int) Math.Round(initialHealth * _resizable.HealthMultiplier);
+        healthBar.value = healthBar.maxValue * percent;
     }
 
     private void UpdateSpeed()
