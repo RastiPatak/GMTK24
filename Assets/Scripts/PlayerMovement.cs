@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Unity;
 using System;
+using Scaling;
 
 public class CharacterController3D : MonoBehaviour
 {
@@ -63,7 +64,14 @@ public class CharacterController3D : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             Debug.Log("Monster was nearby during dash!");
-            hitCollider.SendMessage("Smaller");
+            
+            MonsterObject monster = hitCollider.gameObject.GetComponent<MonsterObject>();
+
+            if (monster != null)
+            {
+                monster.Bigger();
+            }
+            
         }
         yield return new WaitForSeconds(dashLengthSeconds);
         playerSpeed /= dashMultiplier;

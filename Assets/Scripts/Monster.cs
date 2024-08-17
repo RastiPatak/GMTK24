@@ -41,10 +41,27 @@ public class MonsterObject : MonoBehaviour
         }
     }
 
+    private void UpdateHealth()
+    {
+        lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
+    }
+    
     public void Resize(float scale)
     {
         _resizable.Resize(scale);
-        lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
+        UpdateHealth();
+    }
+
+    public void Bigger()
+    {
+        _resizable.Bigger();
+        UpdateHealth();
+    }
+
+    public void Smaller()
+    {
+        _resizable.Smaller();
+        UpdateHealth();
     }
 
 }
