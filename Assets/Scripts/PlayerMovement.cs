@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Unity;
 
 public class CharacterController3D : MonoBehaviour
 {
@@ -10,6 +12,9 @@ public class CharacterController3D : MonoBehaviour
     public float lookSpeed = 2f;
     public float maxLookAngle = 75f;
 
+    [SerializeField] private float fallingMultiplier = 2f;
+    [SerializeField] private float jumpHeight = 1.0f;
+
     private bool isGrounded;
 
     private float xRotation = 0f;
@@ -17,33 +22,28 @@ public class CharacterController3D : MonoBehaviour
 
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
-    [SerializeField] private float jumpHeight = 1.0f;
 
     private CharacterController controller;
 
     void Start()
     {
         camera = Camera.main;
-        rb = GetComponent<Rigidbody>();
         controller = gameObject.AddComponent<CharacterController>();
     }
 
     void Update()
     {
         isGrounded = controller.isGrounded;
-        if (isGrounded && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
         Move();
         Rotate();
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            playerVelocity.y = 0f;
             Jump();
         }
 
-        playerVelocity.y += gravityValue * Time.deltaTime;
+        playerVelocity.y += gravityValue * fallingMultiplier * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
