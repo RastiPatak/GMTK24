@@ -17,6 +17,8 @@ public class CharacterController3D : MonoBehaviour
     public float dashLengthSeconds = 0.6f;
     public float dashAffectionRadius = 10f;
 
+    public float abilityCooldownSeconds = 2f;
+
     [SerializeField] private float fallingMultiplier = 2f;
     [SerializeField] private float jumpHeight = 1.0f;
 
@@ -31,6 +33,7 @@ public class CharacterController3D : MonoBehaviour
     private CharacterController controller;
 
     private bool _currentlyDashing = false;
+    private bool _abilityOnCooldown = false;
 
     void Start()
     {
@@ -49,6 +52,20 @@ public class CharacterController3D : MonoBehaviour
         {
             playerVelocity.y = 0f;
             Jump();
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (!_abilityOnCooldown)
+            {
+                MonsterObject[] enemies = FindObjectsOfType<MonsterObject>();
+                foreach (MonsterObject e in enemies)
+                {
+                    e.Smaller();
+                }
+                _abilityOnCooldown = true;
+                StartCoroutine(Wait(abilityCooldownSeconds, () => { _abilityOnCooldown = false; }));
+            }
         }
 
         if (Input.GetButtonDown("Fire3") && isGrounded)
@@ -83,6 +100,12 @@ public class CharacterController3D : MonoBehaviour
         yield return new WaitForSeconds(dashLengthSeconds);
         playerSpeed /= dashMultiplier;
         this._currentlyDashing = false;
+    }
+
+    private IEnumerator Wait(float waitSeconds, Action followUp)
+    {
+        yield return new WaitForSeconds(waitSeconds);
+        followUp();
     }
 
     private void Move()
