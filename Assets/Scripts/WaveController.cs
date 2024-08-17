@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 using static UnityEngine.GraphicsBuffer;
 
 public class WaveController : MonoBehaviour
@@ -13,12 +14,12 @@ public class WaveController : MonoBehaviour
     [SerializeField] GameObject Monster;
     [SerializeField] Transform Target;
 
-    public int WaveCounter { get; set; } = 2;
+    public int WaveCounter { get; set; } = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartWave();
+        StartCoroutine(StartWave());
     }
 
     // Update is called once per frame
@@ -29,7 +30,7 @@ public class WaveController : MonoBehaviour
 
     }
 
-    void StartWave()
+    IEnumerator StartWave()
     { 
         WaveCounter++;
         int DefaultWaveLp = 5 + WaveCounter;
@@ -39,8 +40,9 @@ public class WaveController : MonoBehaviour
         for (int i = 0; i < MonsterAmount; i++)
         {
             SpawnMonster(DefaultWaveLp, DefaultWaveSpeed);
+
+            yield return new WaitForSeconds(2);
         }
-        //spawn monster every 2 seconds
     }
 
     void SpawnMonster(int lp, float speed)
@@ -57,5 +59,4 @@ public class WaveController : MonoBehaviour
         monster.SendMessage("SetLp", lp);
         monster.SendMessage("SetSpeed", speed);
     }
-
 }

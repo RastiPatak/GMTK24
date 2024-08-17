@@ -3,49 +3,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MonsterObject : MonoBehaviour
 {
-    public NavMeshAgent Monster;
+    public NavMeshAgent monster;
 
-    public Transform Target;
+    public Transform target;
 
-    public int Lp;
-    public float Speed;
+    public int initialHealth;
+    public int lp;
+    public float speed;
+
+    public Slider healthBar;
 
     // Start is called before the first frame update
     void Start()
     {
-        //both based on the round and scaling
-        //set hp
-        //set speed
-        //var a = GetComponent<Resizable>();
-        //a.Resize(Lp);
+        initialHealth = lp;
+        healthBar.value = healthBar.maxValue;
     }
 
     // Update is called once per frame
     void Update()
     {
-       Monster.SetDestination(Target.position);
+       monster.SetDestination(target.position);
 
-        if(Lp <= 0)
+        if(lp <= 0)
         {
-            Destroy(Monster);
+            Destroy(monster);
         }
+
+
     }
 
     void SetTarget(Transform target)
     {
-        Target = target;
+        this.target = target;
     }
 
     void SetLp(int lp)
     {
-        Lp = lp;
+        this.lp = lp;
     }
 
     void SetSpeed(float speed)
     {
-        Speed = speed;
+        this.speed = speed;
     }
 }
