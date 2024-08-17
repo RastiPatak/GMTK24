@@ -34,6 +34,7 @@ public class CharacterController3D : MonoBehaviour
     {
         camera = Camera.main;
         controller = gameObject.AddComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
