@@ -26,6 +26,7 @@ public class MonsterObject : MonoBehaviour
     {
         initialHealth = lp;
         healthBar.value = healthBar.maxValue;
+        healthBar.maxValue = initialHealth;
         
         _resizable = GetComponent<Resizable>();
         
@@ -52,8 +53,16 @@ public class MonsterObject : MonoBehaviour
 
     private void UpdateHealth()
     {
-        float percent =  (float) lp / initialHealth;
-        lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
+        lp = (int)Math.Round(lp * _resizable.HealthMultiplier);
+
+        if (lp > initialHealth){
+            initialHealth = lp;
+        }
+
+        healthBar.maxValue = initialHealth;
+
+        float percent = (float) lp / initialHealth;
+
         healthBar.value = healthBar.maxValue * percent;
     }
 
