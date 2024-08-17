@@ -30,7 +30,7 @@ public class RayCastShot : MonoBehaviour
             StartCoroutine(ShotEffect());
             Vector3 rayOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             RaycastHit hit;
-            laserLine.SetPosition(0, camera.transform.position - new Vector3(0.1f, 0.1f));
+            laserLine.SetPosition(0, camera.transform.position - new Vector3(0.1f, 0.1f, -0.1f));
             if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit, weaponRange))
             {
                 laserLine.SetPosition(1, hit.point);
@@ -38,6 +38,10 @@ public class RayCastShot : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * hitForce);
                 }
+            }
+            else
+            {
+                laserLine.SetPosition(1, rayOrigin + camera.transform.forward * weaponRange);
             }
         }
     }
