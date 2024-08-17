@@ -34,7 +34,8 @@ public class WaveController : MonoBehaviour
     }
 
     IEnumerator StartWave()
-    { 
+    {
+        yield return new WaitForSeconds(5);
         waveCounter++;
         monsterAmount = waveCounter + 1;
         int defaultWaveLp = 5 + waveCounter;
@@ -42,9 +43,7 @@ public class WaveController : MonoBehaviour
        
         for (int i = 0; i <= monsterAmount; i++)
         {
-            SpawnMonster(defaultWaveLp, defaultWaveSpeed);
-
-            yield return new WaitForSeconds(1);
+            SpawnMonster(defaultWaveLp, defaultWaveSpeed); 
         }
         //spawn monster every 2 seconds
     }
