@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity;
 using System;
 using Scaling;
+using UnityEngine.UI;
 
 public class CharacterController3D : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class CharacterController3D : MonoBehaviour
 
     [SerializeField] private float fallingMultiplier = 2f;
     [SerializeField] private float jumpHeight = 1.0f;
+
+    [SerializeField] private Slider abilityCooldown;
+
+    [SerializeField] private Color sliderBackground;
+    [SerializeField] private Color sliderForeground;
+    [SerializeField] private Color sliderComplete;
 
     private bool isGrounded;
 
@@ -58,6 +65,14 @@ public class CharacterController3D : MonoBehaviour
         {
             if (!_abilityOnCooldown)
             {
+                abilityCooldown.maxValue = abilityCooldownSeconds;
+                abilityCooldown.value = abilityCooldownSeconds;
+
+                abilityCooldown.GetComponentsInChildren<Image>()[0].color = sliderBackground;
+                abilityCooldown.GetComponentsInChildren<Image>()[1].color = sliderForeground;
+
+                StartCoroutine(DecreseSlider(abilityCooldown));
+
                 MonsterObject[] enemies = FindObjectsOfType<MonsterObject>();
                 foreach (MonsterObject e in enemies)
                 {
@@ -77,6 +92,24 @@ public class CharacterController3D : MonoBehaviour
 
         playerVelocity.y += gravityValue * fallingMultiplier * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    IEnumerator DecreseSlider(Slider slider)
+    {
+        if (slider != null)
+        {
+            float timeSlice = (slider.value / abilityCooldownSeconds / 10);
+            while (slider.value >= 0)
+            {
+                slider.value -= timeSlice;
+                yield return new WaitForSeconds(0.1f);
+                if (slider.value <= 0)
+                    break;
+            }
+        }
+        slider.GetComponentsInChildren<Image>()[0].color = sliderComplete;
+        slider.GetComponentsInChildren<Image>()[1].color = sliderComplete;
+        yield return null;
     }
 
     private IEnumerator Dash()
