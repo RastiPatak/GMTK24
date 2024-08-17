@@ -1,10 +1,10 @@
-using System;
 using Scaling;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
+using System;
+using UnityEngine.UI;
 
 public class MonsterObject : MonoBehaviour
 {
@@ -16,6 +16,9 @@ public class MonsterObject : MonoBehaviour
     public float speed;
 
     private Resizable _resizable;
+    public int initialHealth;
+
+    public Slider healthBar;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +31,8 @@ public class MonsterObject : MonoBehaviour
         //set speed
         //var a = GetComponent<Resizable>();
         //a.Resize(Lp);
+        initialHealth = lp;
+        healthBar.value = healthBar.maxValue;
     }
 
     // Update is called once per frame
@@ -38,7 +43,10 @@ public class MonsterObject : MonoBehaviour
         if(lp <= 0)
         {
             Destroy(gameObject);
+            Destroy(monster);
         }
+
+
     }
 
     private void UpdateHealth()
