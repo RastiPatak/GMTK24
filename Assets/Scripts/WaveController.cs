@@ -15,7 +15,8 @@ public class WaveController : MonoBehaviour
     public GameObject monster;
     public Transform target;
 
-    public int WaveCounter { get; set; } = 0;
+    public int waveCounter { get; set; } = 0;
+    public int monsterAmount { get; set; } = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -26,21 +27,23 @@ public class WaveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //check if the wave ended
-        //change lp
+        if(monsterAmount == 0)
+        {
+            StartWave();
+        }
 
     }
 
     IEnumerator StartWave()
     { 
-        WaveCounter++;
-        int defaultWaveLp = 5 + WaveCounter;
+        waveCounter++;
+        monsterAmount = waveCounter + 1;
+        int defaultWaveLp = 5 + waveCounter;
         float defaultWaveSpeed = 1;
-        int monsterAmount =  WaveCounter;
-
-        for (int i = 0; i < monsterAmount; i++)
+       
+        for (int i = 0; i <= monsterAmount; i++)
         {
-            SpawnMonster(DefaultWaveLp, DefaultWaveSpeed);
+            SpawnMonster(defaultWaveLp, defaultWaveSpeed);
 
             yield return new WaitForSeconds(2);
         }
