@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 using UnityEngine.Serialization;
 using static UnityEngine.GraphicsBuffer;
 
@@ -35,9 +34,7 @@ public class WaveController : MonoBehaviour
     }
 
     IEnumerator StartWave()
-    {
-        
-        Debug.Log("Started wave");
+    { 
         waveCounter++;
         monsterAmount = waveCounter + 1;
         int defaultWaveLp = 5 + waveCounter;
@@ -49,6 +46,7 @@ public class WaveController : MonoBehaviour
 
             yield return new WaitForSeconds(2);
         }
+        //spawn monster every 2 seconds
     }
 
     void SpawnMonster(int lp, float speed)
@@ -68,4 +66,5 @@ public class WaveController : MonoBehaviour
         monsterObject.speed = speed;
 
     }
+
 }
