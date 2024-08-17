@@ -9,9 +9,16 @@ public class MonsterMovement : MonoBehaviour
 
     public Transform Target;
 
+    int Lp;
+
     void SetTarget(Transform target)
     {
         Target = target;
+    }
+
+    void SetLp(int lp)
+    {
+        Lp = lp;
     }
 
     // Start is called before the first frame update
