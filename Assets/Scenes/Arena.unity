@@ -771,6 +771,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveController
       objectReference: {fileID: 0}
+    - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4703318212825328007, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.158952
