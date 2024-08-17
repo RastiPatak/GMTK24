@@ -31,12 +31,19 @@ public class RayCastShot : MonoBehaviour
             Vector3 rayOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             RaycastHit hit;
             laserLine.SetPosition(0, camera.transform.position - new Vector3(0.1f, 0.1f, -0.1f));
-            if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit, weaponRange))
+
+            var isHit = Physics.Raycast(rayOrigin, camera.transform.forward, out hit, weaponRange);
+            if (isHit)
             {
                 laserLine.SetPosition(1, hit.point);
+                Debug.Log(hit);
                 if (hit.rigidbody != null)
                 {
                     hit.rigidbody.AddForce(-hit.normal * hitForce);
+                    
+                    Renderer rend = hit.rigidbody.GetComponent<Renderer>();
+                    rend.material.color = Color.red;
+
                 }
             }
             else
