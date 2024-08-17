@@ -8,44 +8,56 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using static UnityEngine.GraphicsBuffer;
+using TMPro;
 
 public class WaveController : MonoBehaviour
 {
     public GameObject monster;
     public Transform target;
 
+    public TextMeshProUGUI waveCounterText;
+
     public int waveCounter { get; set; } = 0;
     public int monsterAmount { get; set; } = -1;
+
+    public bool start = false;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(StartWave());
+        waveCounterText.text = "Wave Nr: " + waveCounter;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(monsterAmount == 0)
+        if(monsterAmount == 0 && start)
         {
             StartCoroutine(StartWave());
+            start = false;
         }
+
+
 
     }
 
     IEnumerator StartWave()
     {
         yield return new WaitForSeconds(5);
+
         waveCounter++;
-        monsterAmount = waveCounter + 1;
-        int defaultWaveLp = 5 + waveCounter;
+        waveCounterText.text = "Wave Nr: " + waveCounter;
+        monsterAmount = (waveCounter + 1) * 2;
+        start = true;
+        Debug.Log(waveCounter);
+        int defaultWaveLp = 5 + (waveCounter * 2);
         float defaultWaveSpeed = 1;
        
-        for (int i = 0; i <= monsterAmount; i++)
+        for (int i = 0; i < monsterAmount; i++)
         {
             SpawnMonster(defaultWaveLp, defaultWaveSpeed); 
         }
-        //spawn monster every 2 seconds
     }
 
     void SpawnMonster(int lp, float speed)
