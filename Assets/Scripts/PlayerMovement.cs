@@ -1,91 +1,110 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Unity;
+using System;
+using Scaling;
 
 public class CharacterController3D : MonoBehaviour
 {
     private Camera camera;
 
-    public float moveSpeed = 5f;
-    public float rotateSpeed = 720f; // Degrees per second
-    public float jumpForce = 5f;
+    public float playerSpeed = 5f;
     public float lookSpeed = 2f;
     public float maxLookAngle = 75f;
+    public float dashMultiplier = 3f;
+    public float dashLengthSeconds = 0.6f;
+    public float dashAffectionRadius = 10f;
 
-    private Rigidbody rb;
+    [SerializeField] private float fallingMultiplier = 2f;
+    [SerializeField] private float jumpHeight = 1.0f;
+
     private bool isGrounded;
 
-    private Transform cameraTransform;
     private float xRotation = 0f;
     private float yRotation = 0f;
+
+    private float gravityValue = -9.81f;
+    private Vector3 playerVelocity;
+
+    private CharacterController controller;
 
     void Start()
     {
         camera = Camera.main;
-        cameraTransform = Camera.main.transform;
-        rb = GetComponent<Rigidbody>();
+        controller = gameObject.AddComponent<CharacterController>();
     }
 
     void Update()
     {
+        isGrounded = controller.isGrounded;
         Move();
         Rotate();
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            playerVelocity.y = 0f;
             Jump();
         }
+
+        if (Input.GetButtonDown("Fire3") && isGrounded)
+        {
+            StartCoroutine(Dash());
+        }
+
+        playerVelocity.y += gravityValue * fallingMultiplier * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private IEnumerator Dash()
+    {
+        playerSpeed *= dashMultiplier;
+        Collider[] hitColliders = Physics.OverlapSphere(camera.transform.position, dashAffectionRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            Debug.Log("Monster was nearby during dash!");
+            
+            MonsterObject monster = hitCollider.gameObject.GetComponent<MonsterObject>();
+
+            if (monster != null)
+            {
+                monster.Bigger();
+            }
+            
+        }
+        yield return new WaitForSeconds(dashLengthSeconds);
+        playerSpeed /= dashMultiplier;
     }
 
     private void Move()
     {
-        // Get input
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        move = camera.transform.TransformDirection(move);
+        controller.Move(move * Time.deltaTime * playerSpeed);
 
-        float rotateHorizontal = Input.GetAxis("Mouse X");
-        float rotateVertical = Input.GetAxis("Mouse Y");
-
-        // Calculate direction
-        Vector3 movement = transform.forward * moveVertical + transform.right * moveHorizontal;
-
-        // Apply movement
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
+        if (move != Vector3.zero)
+        {
+            gameObject.transform.forward = move;
+        }
     }
 
     private void Rotate()
     {
-        // Get mouse input
         float yRotationInput = Input.GetAxis("Mouse X");
         float xRotationInput = Input.GetAxis("Mouse Y") * lookSpeed;
 
-        // Rotate character around the Y-axis (left and right)
-        transform.Rotate(Vector3.up * yRotationInput * rotateSpeed * Time.deltaTime);
-
-        // Rotate camera up and down
         xRotation -= xRotationInput;
         xRotation = Mathf.Clamp(xRotation, -maxLookAngle, maxLookAngle);
 
         yRotation += yRotationInput * lookSpeed;
 
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        camera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
 
     private void Jump()
     {
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        // Check if we are grounded
-        isGrounded = true;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        // We are not grounded if we're not touching anything
-        isGrounded = false;
+        playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
     }
 
     private void LateUpdate()

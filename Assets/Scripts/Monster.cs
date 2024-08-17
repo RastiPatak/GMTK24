@@ -1,9 +1,11 @@
+using System;
 using Scaling;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 public class MonsterObject : MonoBehaviour
 {
@@ -17,11 +19,21 @@ public class MonsterObject : MonoBehaviour
 
     public Slider healthBar;
 
+    private Resizable _resizable;
+
     // Start is called before the first frame update
     void Start()
     {
         initialHealth = lp;
         healthBar.value = healthBar.maxValue;
+        
+        _resizable = GetComponent<Resizable>();
+        
+        //both based on the round and scaling
+        //set hp
+        //set speed
+        //var a = GetComponent<Resizable>();
+        //a.Resize(Lp);
     }
 
     // Update is called once per frame
@@ -31,24 +43,31 @@ public class MonsterObject : MonoBehaviour
 
         if(lp <= 0)
         {
-            Destroy(monster);
+            Destroy(gameObject);
         }
-
-
     }
 
-    void SetTarget(Transform target)
+    private void UpdateHealth()
     {
-        this.target = target;
+        lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
+    }
+    
+    public void Resize(float scale)
+    {
+        _resizable.Resize(scale);
+        UpdateHealth();
     }
 
-    void SetLp(int lp)
+    public void Bigger()
     {
-        this.lp = lp;
+        _resizable.Bigger();
+        UpdateHealth();
     }
 
-    void SetSpeed(float speed)
+    public void Smaller()
     {
-        this.speed = speed;
+        _resizable.Smaller();
+        UpdateHealth();
     }
+
 }
