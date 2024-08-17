@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Unity;
+using System;
 
 public class CharacterController3D : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class CharacterController3D : MonoBehaviour
     public float playerSpeed = 5f;
     public float lookSpeed = 2f;
     public float maxLookAngle = 75f;
+    public float dashMultiplier = 3f;
+    public float dashLengthSeconds = 0.6f;
+    public float dashAffectionRadius = 10f;
 
     [SerializeField] private float fallingMultiplier = 2f;
     [SerializeField] private float jumpHeight = 1.0f;
@@ -43,8 +47,26 @@ public class CharacterController3D : MonoBehaviour
             Jump();
         }
 
+        if (Input.GetButtonDown("Fire3") && isGrounded)
+        {
+            StartCoroutine(Dash());
+        }
+
         playerVelocity.y += gravityValue * fallingMultiplier * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private IEnumerator Dash()
+    {
+        playerSpeed *= dashMultiplier;
+        Collider[] hitColliders = Physics.OverlapSphere(camera.transform.position, dashAffectionRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            Debug.Log("Monster was nearby during dash!");
+            hitCollider.SendMessage("Smaller");
+        }
+        yield return new WaitForSeconds(dashLengthSeconds);
+        playerSpeed /= dashMultiplier;
     }
 
     private void Move()
