@@ -1,21 +1,28 @@
+using System;
 using Scaling;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class MonsterObject : MonoBehaviour
 {
-    public NavMeshAgent Monster;
+    public NavMeshAgent monster;
 
-    public Transform Target;
+    public Transform target;
 
-    public int Lp;
-    public float Speed;
+    public int lp;
+    public float speed;
+
+    private Resizable _resizable;
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        _resizable = GetComponent<Resizable>();
+        
         //both based on the round and scaling
         //set hp
         //set speed
@@ -26,26 +33,18 @@ public class MonsterObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       Monster.SetDestination(Target.position);
+       monster.SetDestination(target.position);
 
-        if(Lp <= 0)
+        if(lp <= 0)
         {
-            Destroy(Monster);
+            Destroy(gameObject);
         }
     }
 
-    void SetTarget(Transform target)
+    public void Resize(float scale)
     {
-        Target = target;
+        _resizable.Resize(scale);
+        lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
     }
 
-    void SetLp(int lp)
-    {
-        Lp = lp;
-    }
-
-    void SetSpeed(float speed)
-    {
-        Speed = speed;
-    }
 }

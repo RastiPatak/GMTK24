@@ -41,9 +41,12 @@ public class RayCastShot : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * hitForce);
                     
-                    Renderer rend = hit.rigidbody.GetComponent<Renderer>();
-                    rend.material.color = Color.red;
+                    MonsterObject monsterObject = hit.rigidbody.GetComponent<MonsterObject>();
 
+                    int damage = Random.Range(1, 2);
+
+                    monsterObject.lp -= damage;
+                    Debug.Log(monsterObject.lp);
                 }
             }
             else
