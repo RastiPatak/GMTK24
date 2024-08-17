@@ -25,7 +25,7 @@ public class MonsterObject : MonoBehaviour
     void Start()
     {
         initialHealth = lp;
-        healthBar.value = healthBar.maxValue;
+        // healthBar.value = healthBar.maxValue;
         
         _resizable = GetComponent<Resizable>();
         

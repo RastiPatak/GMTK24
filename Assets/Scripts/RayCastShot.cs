@@ -42,6 +42,7 @@ public class RayCastShot : MonoBehaviour
                     hit.rigidbody.AddForce(-hit.normal * hitForce);
                     
                     MonsterObject monsterObject = hit.rigidbody.GetComponent<MonsterObject>();
+                    
 
                     int damage = Random.Range(1, 2);
 

@@ -30,6 +30,8 @@ public class CharacterController3D : MonoBehaviour
 
     private CharacterController controller;
 
+    private bool _currentlyDashing = false;
+
     void Start()
     {
         camera = Camera.main;
@@ -51,6 +53,8 @@ public class CharacterController3D : MonoBehaviour
 
         if (Input.GetButtonDown("Fire3") && isGrounded)
         {
+            if (_currentlyDashing)
+                return;
             StartCoroutine(Dash());
         }
 
@@ -60,22 +64,25 @@ public class CharacterController3D : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        this._currentlyDashing = true;
         playerSpeed *= dashMultiplier;
         Collider[] hitColliders = Physics.OverlapSphere(camera.transform.position, dashAffectionRadius);
         foreach (var hitCollider in hitColliders)
         {
-            Debug.Log("Monster was nearby during dash!");
             
             MonsterObject monster = hitCollider.gameObject.GetComponent<MonsterObject>();
 
             if (monster != null)
             {
+                Debug.Log("Monster was nearby during dash!");
+
                 monster.Bigger();
             }
             
         }
         yield return new WaitForSeconds(dashLengthSeconds);
         playerSpeed /= dashMultiplier;
+        this._currentlyDashing = false;
     }
 
     private void Move()
