@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Health;
 using Unity.AI.Navigation.Editor;
 using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
@@ -75,6 +76,7 @@ public class WaveController : MonoBehaviour
         monsterObject.target = target;
         monsterObject.lp = lp;
         monsterObject.speed = speed;
+
 
     }
 
