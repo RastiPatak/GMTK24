@@ -35,7 +35,9 @@ public class WaveController : MonoBehaviour
     }
 
     IEnumerator StartWave()
-    { 
+    {
+        
+        Debug.Log("Started wave");
         waveCounter++;
         monsterAmount = waveCounter + 1;
         int defaultWaveLp = 5 + waveCounter;
