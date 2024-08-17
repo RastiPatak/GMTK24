@@ -46,6 +46,7 @@ public class RayCastShot : MonoBehaviour
                     int damage = Random.Range(1, 2);
 
                     monsterObject.lp -= damage;
+                    monsterObject.Smaller();
                     Debug.Log(monsterObject.lp);
                 }
             }

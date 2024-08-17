@@ -45,23 +45,32 @@ public class MonsterObject : MonoBehaviour
     {
         lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
     }
+
+    private void UpdateSpeed()
+    {
+        speed *= (float)_resizable.HealthMultiplier;
+        monster.speed = speed;
+    }
     
     public void Resize(float scale)
     {
         _resizable.Resize(scale);
         UpdateHealth();
+        UpdateSpeed();
     }
 
     public void Bigger()
     {
         _resizable.Bigger();
         UpdateHealth();
+        UpdateSpeed();
     }
 
     public void Smaller()
     {
         _resizable.Smaller();
         UpdateHealth();
+        UpdateSpeed();
     }
 
 }
