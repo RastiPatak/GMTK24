@@ -44,7 +44,7 @@ public class WaveController : MonoBehaviour
         {
             SpawnMonster(defaultWaveLp, defaultWaveSpeed);
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
         }
         //spawn monster every 2 seconds
     }
