@@ -1036,11 +1036,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 260
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 4350564570210046386, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4703318212825328007, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1086,6 +1086,18 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 2036364521}
+    - target: {fileID: 7761034501391089543, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_text
+      value: 'Wave Nr. 1000 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761034501391089543, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+    - target: {fileID: 7761034501391089543, guid: bc36bbe4baf99ea4dbc4b6086a615af3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
