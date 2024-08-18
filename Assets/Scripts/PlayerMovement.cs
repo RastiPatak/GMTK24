@@ -24,6 +24,7 @@ public class CharacterController3D : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
 
     [SerializeField] private Slider abilityCooldown;
+    [SerializeField] private Image alt_icon;
 
     [SerializeField] private Color sliderBackground;
     [SerializeField] private Color sliderForeground;
@@ -66,6 +67,8 @@ public class CharacterController3D : MonoBehaviour
         {
             if (!_abilityOnCooldown)
             {
+                alt_icon.enabled = false;
+
                 abilityCooldown.maxValue = abilityCooldownSeconds;
                 abilityCooldown.value = abilityCooldownSeconds;
 
@@ -80,7 +83,7 @@ public class CharacterController3D : MonoBehaviour
                     e.Smaller();
                 }
                 _abilityOnCooldown = true;
-                StartCoroutine(Wait(abilityCooldownSeconds, () => { _abilityOnCooldown = false; }));
+                StartCoroutine(Wait(abilityCooldownSeconds, () => { _abilityOnCooldown = false; alt_icon.enabled = true; }));
             }
         }
 
