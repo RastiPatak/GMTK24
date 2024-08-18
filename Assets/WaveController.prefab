@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1030c366d298da24d9ec0e5aacea63e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster: {fileID: 446131154709291928, guid: 80640fab4528828449446e2c355e1b1b, type: 3}
+  monster: {fileID: 826310379595303744, guid: 202dd5269a3f79f42b592b4683354076, type: 3}
   target: {fileID: 0}
   waveCounterText: {fileID: 7761034501391089543}
   start: 0

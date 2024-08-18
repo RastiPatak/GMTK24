@@ -21,6 +21,11 @@ public class MonsterObject : MonoBehaviour
 
     private Resizable _resizable;
 
+    private MonsterAnimationHandler _animationHandler;
+
+    private bool _isDowned;
+    public bool IsDowned => _isDowned;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +33,8 @@ public class MonsterObject : MonoBehaviour
         healthBar.value = healthBar.maxValue;
         
         _resizable = GetComponent<Resizable>();
-        
+        _animationHandler = GetComponent<MonsterAnimationHandler>();
+
         //both based on the round and scaling
         //set hp
         //set speed
@@ -39,15 +45,29 @@ public class MonsterObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       monster.SetDestination(target.position);
-
+        
+        if(!_isDowned)
+            monster.SetDestination(target.position);
+       
         if(lp <= 0)
         {
-            WaveController wc =FindFirstObjectByType<WaveController>();
-            wc.monsterAmount -= 1;
 
-            Destroy(gameObject);
+            if (_isDowned)
+                return;
+            
+            WaveController wc =FindFirstObjectByType<WaveController>();
+            _isDowned = true;
+            StartCoroutine(Die());
         }
+    }
+
+    private IEnumerator Die()
+    {
+        
+        _animationHandler.PlayDeath();
+
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     private void UpdateHealth()

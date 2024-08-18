@@ -13,16 +13,24 @@ namespace Health
         private float _secondsLeft;
         private GameObject _playerObject;
         private PlayerHealth _playerHealth;
+        private MonsterObject _monsterObject;
+        private Animator _animator;
 
         private void Start()
         {
             _secondsLeft = cycleSeconds;
             _playerObject = GameObject.FindGameObjectWithTag("Player");
             _playerHealth = _playerObject.GetComponent<PlayerHealth>();
+            _monsterObject = GetComponent<MonsterObject>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
+
+            if (_monsterObject.IsDowned)
+                return;
+            
             _secondsLeft -= Time.deltaTime;
 
             if (_secondsLeft <= 0.0f)
@@ -33,7 +41,9 @@ namespace Health
 
                 if (distance <= radius)
                 {
+                    _animator.Play("Attack");
                     _playerHealth.TakeDamage(damagePerCycle);
+                    _animator.Play("Run");
                 }
 
             }

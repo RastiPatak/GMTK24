@@ -19,9 +19,8 @@ public class WaveController : MonoBehaviour
     public TextMeshProUGUI waveCounterText;
 
     public int waveCounter { get; set; } = 0;
-    public int monsterAmount { get; set; } = -1;
 
-    public bool start = false;
+    private bool start = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +32,10 @@ public class WaveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(monsterAmount == 0 && start)
+        
+        int monsterCount = GameObject.FindGameObjectsWithTag("Monster").Length;
+        
+        if(monsterCount == 0 && start)
         {
             StartCoroutine(StartWave());
             start = false;
@@ -49,13 +51,12 @@ public class WaveController : MonoBehaviour
 
         waveCounter++;
         waveCounterText.text = "Wave Nr: " + waveCounter;
-        monsterAmount = (waveCounter + 1) * 2;
         start = true;
         Debug.Log(waveCounter);
         int defaultWaveLp = 5 + (waveCounter * 2);
         float defaultWaveSpeed = 1;
        
-        for (int i = 0; i < monsterAmount; i++)
+        for (int i = 0; i < (waveCounter + 1) * 2; i++)
         {
             SpawnMonster(defaultWaveLp, defaultWaveSpeed); 
         }
