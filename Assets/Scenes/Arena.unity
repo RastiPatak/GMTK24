@@ -1367,6 +1367,7 @@ MonoBehaviour:
   fireRate: 0.25
   weaponRange: 50
   hitForce: 10
+  charactercontrl: {fileID: 2036364523}
 --- !u!114 &2036364526
 MonoBehaviour:
   m_ObjectHideFlags: 0

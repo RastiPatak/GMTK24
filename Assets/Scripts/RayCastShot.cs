@@ -13,6 +13,8 @@ public class RayCastShot : MonoBehaviour
     private LineRenderer laserLine;
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
 
+    [SerializeField] CharacterController3D charactercontrl;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,7 @@ public class RayCastShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextFire)
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextFire && !charactercontrl.AbilityOnCooldown)
         {
             Debug.Log("Shot initiated");
             nextFire = Time.time + fireRate;

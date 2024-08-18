@@ -41,6 +41,7 @@ public class CharacterController3D : MonoBehaviour
 
     private bool _currentlyDashing = false;
     private bool _abilityOnCooldown = false;
+    public bool AbilityOnCooldown => _abilityOnCooldown;
 
     void Start()
     {
