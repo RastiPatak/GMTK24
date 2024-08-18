@@ -27,6 +27,8 @@ namespace Health
 
         private void Update()
         {
+            if (_playerObject == null)
+                return;
 
             if (_monsterObject.IsDowned)
                 return;
