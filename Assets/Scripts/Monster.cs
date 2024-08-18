@@ -49,7 +49,7 @@ public class MonsterObject : MonoBehaviour
     void Update()
     {
         
-        if(!_isDowned)
+        if(!_isDowned && target != null)
             monster.SetDestination(target.position);
        
         if(lp <= 0)
