@@ -1,14 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Health;
-using Unity.AI.Navigation.Editor;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
-using static UnityEngine.GraphicsBuffer;
 using TMPro;
 
 public class WaveController : MonoBehaviour
