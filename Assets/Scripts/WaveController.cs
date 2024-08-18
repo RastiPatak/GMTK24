@@ -65,8 +65,8 @@ public class WaveController : MonoBehaviour
     void SpawnMonster(int lp, float speed)
     {
         int spawnPointY = 3;
-        int spawnPointX = Random.Range(-40, 40);
-        int spawnPointZ = Random.Range(-40, 40);
+        int spawnPointX = Random.Range(-38, 38);
+        int spawnPointZ = Random.Range(-38, 38);
 
         Vector3 spawnPosition = new Vector3(spawnPointX, spawnPointY, spawnPointZ);
 
