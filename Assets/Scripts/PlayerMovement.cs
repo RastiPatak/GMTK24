@@ -19,6 +19,7 @@ public class CharacterController3D : MonoBehaviour
     public float dashAffectionRadius = 10f;
 
     public float abilityCooldownSeconds = 2f;
+    public float abilityEffectTime = 2f;
 
     [SerializeField] private float fallingMultiplier = 2f;
     [SerializeField] private float jumpHeight = 1.0f;
@@ -27,7 +28,8 @@ public class CharacterController3D : MonoBehaviour
     [SerializeField] private Image alt_icon;
 
     [SerializeField] private Color sliderBackground;
-    [SerializeField] private Color sliderForeground;
+    [SerializeField] private Color sliderForegroundEffect;
+    [SerializeField] private Color sliderForegroundCooldown;
     [SerializeField] private Color sliderComplete;
 
     private bool isGrounded;
@@ -69,13 +71,28 @@ public class CharacterController3D : MonoBehaviour
             {
                 alt_icon.enabled = false;
 
-                abilityCooldown.maxValue = abilityCooldownSeconds;
-                abilityCooldown.value = abilityCooldownSeconds;
+                abilityCooldown.maxValue = abilityEffectTime;
+                abilityCooldown.value = abilityEffectTime;
 
                 abilityCooldown.GetComponentsInChildren<Image>()[0].color = sliderBackground;
-                abilityCooldown.GetComponentsInChildren<Image>()[1].color = sliderForeground;
+                abilityCooldown.GetComponentsInChildren<Image>()[1].color = sliderForegroundEffect;
 
-                StartCoroutine(DecreseSlider(abilityCooldown));
+                StartCoroutine(DecreaseSlider(abilityCooldown, abilityEffectTime, () => {
+                    abilityCooldown.GetComponentsInChildren<Image>()[0].color = sliderBackground;
+                    abilityCooldown.GetComponentsInChildren<Image>()[1].color = sliderForegroundCooldown;
+                    MonsterObject[] enemies = FindObjectsOfType<MonsterObject>();
+                    foreach (MonsterObject e in enemies)
+                    {
+                        e.Bigger();
+                    }
+                    abilityCooldown.maxValue = abilityCooldownSeconds;
+                    abilityCooldown.value = abilityCooldownSeconds;
+                    StartCoroutine(DecreaseSlider(abilityCooldown, abilityCooldownSeconds, () =>
+                    {
+                        abilityCooldown.GetComponentsInChildren<Image>()[0].color = sliderComplete;
+                        abilityCooldown.GetComponentsInChildren<Image>()[1].color = sliderComplete;
+                    }));
+                }));
 
                 MonsterObject[] enemies = FindObjectsOfType<MonsterObject>();
                 foreach (MonsterObject e in enemies)
@@ -83,7 +100,10 @@ public class CharacterController3D : MonoBehaviour
                     e.Smaller();
                 }
                 _abilityOnCooldown = true;
-                StartCoroutine(Wait(abilityCooldownSeconds, () => { _abilityOnCooldown = false; alt_icon.enabled = true; }));
+
+                
+
+                StartCoroutine(Wait(abilityEffectTime + abilityCooldownSeconds, () => { _abilityOnCooldown = false; alt_icon.enabled = true; }));
             }
         }
 
@@ -98,22 +118,23 @@ public class CharacterController3D : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    IEnumerator DecreseSlider(Slider slider)
+    IEnumerator DecreaseSlider(Slider slider, float seconds, Action followup = null)
     {
         if (slider != null)
         {
-            float timeSlice = (slider.value / abilityCooldownSeconds / 10);
+            float timeSlice = (slider.value / seconds / 10);
             while (slider.value >= 0)
             {
+                Debug.Log(timeSlice + ", " + slider.value);
                 slider.value -= timeSlice;
                 yield return new WaitForSeconds(0.1f);
                 if (slider.value <= 0)
                     break;
             }
         }
-        slider.GetComponentsInChildren<Image>()[0].color = sliderComplete;
-        slider.GetComponentsInChildren<Image>()[1].color = sliderComplete;
         yield return null;
+        if (followup != null)
+            followup();
     }
 
     private IEnumerator Dash()
