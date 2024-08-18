@@ -14,6 +14,7 @@ public class MonsterObject : MonoBehaviour
     public Transform target;
 
     public int initialHealth;
+    public int maxHealth;
     public int lp;
     public float speed;
 
@@ -25,6 +26,8 @@ public class MonsterObject : MonoBehaviour
     void Start()
     {
         initialHealth = lp;
+        maxHealth = lp;
+        healthBar.maxValue = initialHealth;
         healthBar.value = healthBar.maxValue;
         
         _resizable = GetComponent<Resizable>();
@@ -49,11 +52,14 @@ public class MonsterObject : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+      
     private void UpdateHealth()
     {
-        lp = (int) Math.Round(lp * _resizable.HealthMultiplier);
-        initialHealth = (int) Math.Round(initialHealth * _resizable.HealthMultiplier);
+        int maxBefore = maxHealth;
+        maxHealth = (int) Math.Round(initialHealth * _resizable.HealthMultiplier);
+        lp += (maxHealth - maxBefore);
+        healthBar.maxValue = maxHealth;
+        healthBar.value = lp;
     }
 
     private void UpdateSpeed()
