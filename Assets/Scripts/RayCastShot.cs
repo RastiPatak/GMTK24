@@ -13,6 +13,8 @@ public class RayCastShot : MonoBehaviour
     private LineRenderer laserLine;
     private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
 
+    [SerializeField] CharacterController3D charactercontrl;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +51,9 @@ public class RayCastShot : MonoBehaviour
                     monsterObject.lp -= damage;
                     monsterObject.Smaller();
                     Debug.Log(monsterObject.lp);
+                    
+                    MonsterAnimationHandler animationHandler = hit.rigidbody.GetComponent<MonsterAnimationHandler>();
+                    animationHandler.PlayHit();
                 }
             }
             else
